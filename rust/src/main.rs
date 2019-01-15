@@ -1,3 +1,5 @@
+use std::time;
+
 use rand::distributions::{Distribution, Uniform};
 use rand::distributions::uniform::SampleUniform;
 
@@ -33,7 +35,9 @@ fn run_sort<T: PartialOrd + Clone>(mut data: &mut Vec<T>,
                                    algorithm: &impl sort::SortAlgorithm<T>) {
     println!("Algorithm: {}", algorithm.get_name());
 
+    let now = time::Instant::now();
     algorithm.sort(&mut data);
+    let duration = now.elapsed();
 
     if test_for_sorting(&data) {
         println!("    Sorted");
@@ -41,6 +45,9 @@ fn run_sort<T: PartialOrd + Clone>(mut data: &mut Vec<T>,
     else {
         println!("    Unsorted");
     }
+
+    let time_ms = duration.as_secs() * 1000 + duration.subsec_millis() as u64;
+    println!("    Run {} ms", time_ms);
 }
 
 
