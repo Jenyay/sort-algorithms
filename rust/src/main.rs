@@ -2,7 +2,7 @@ use rand::distributions::{Distribution, Uniform};
 use rand::distributions::uniform::SampleUniform;
 
 mod sort;
-use self::sort::SortAlgorithm;
+use self::sort::bubble;
 
 fn create_array<T: SampleUniform>(size: usize, min: T, max: T) -> Vec<T> {
     let mut result: Vec<T> = Vec::with_capacity(size);
@@ -30,7 +30,7 @@ fn test_for_sorting<T: PartialOrd>(data: &Vec<T>) -> bool {
 
 
 fn run_sort<T: PartialOrd + Clone>(mut data: &mut Vec<T>,
-                                   algorithm: &SortAlgorithm<T>) {
+                                   algorithm: &impl sort::SortAlgorithm<T>) {
     println!("Algorithm: {}", algorithm.get_name());
 
     algorithm.sort(&mut data);
@@ -49,6 +49,6 @@ fn main() {
     let data = create_array(size, 0, 1000);
     println!("Data size: {}", size);
 
-    let bubble_sort = sort::BubbleSort::new();
+    let bubble_sort = bubble::BubbleSort::new();
     run_sort(&mut data.clone(), &bubble_sort);
 }
