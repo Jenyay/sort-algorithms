@@ -32,8 +32,10 @@ fn test_for_sorting<T: PartialOrd>(data: &Vec<T>) -> bool {
 }
 
 
-fn run_sort<T: PartialOrd + Clone>(mut data: &mut Vec<T>,
-                                   algorithm: &impl sort::SortAlgorithm<T>) {
+fn run_sort<T, U>(mut data: &mut Vec<T>, algorithm: &U)
+    where T: PartialOrd + Clone,
+          U: sort::SortAlgorithm<T> + sort::Named
+{
     println!("Algorithm: {}", algorithm.get_name());
 
     let now = time::Instant::now();

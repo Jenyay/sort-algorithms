@@ -1,8 +1,8 @@
 pub struct BubbleSort;
 
 impl BubbleSort {
-    pub fn new() -> BubbleSort {
-        BubbleSort {}
+    pub fn new() -> Self {
+        Self {}
     }
 }
 
@@ -22,7 +22,9 @@ impl<T: PartialOrd + Clone> super::SortAlgorithm<T> for BubbleSort {
             }
         }
     }
+}
 
+impl super::Named for BubbleSort {
     fn get_name(&self) -> &str {
         "Bubble sort"
     }

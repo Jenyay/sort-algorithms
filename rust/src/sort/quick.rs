@@ -1,10 +1,7 @@
-pub struct QuickSortEnd;
+trait QuickSort<T: PartialOrd + Clone> : super::SortAlgorithm<T> {
+    fn process(&self, data: &mut Vec<T>, start: usize, end: usize) -> usize;
 
-
-trait QuickSort {
-    fn process<T: PartialOrd + Clone>(&self, data: &mut Vec<T>, start: usize, end: usize) -> usize;
-
-    fn _sort<T: PartialOrd + Clone>(&self, data: &mut Vec<T>, start: usize, end: usize) {
+    fn _sort(&self, data: &mut Vec<T>, start: usize, end: usize) {
         if start < end {
             let pivot_index = self.process(data, start, end);
 
@@ -18,18 +15,24 @@ trait QuickSort {
         }
     }
 
-}
-
-
-impl QuickSortEnd {
-    pub fn new() -> QuickSortEnd {
-        QuickSortEnd {}
+    fn sort(&self, data: &mut Vec<T>) {
+        self._sort(data, 0, (data.len() as usize) - 1);
     }
 }
 
 
-impl QuickSort for QuickSortEnd {
-    fn process<T: PartialOrd + Clone>(&self, data: &mut Vec<T>, start: usize, end: usize) -> usize {
+// QuickSortEnd
+pub struct QuickSortEnd;
+
+impl QuickSortEnd {
+    pub fn new() -> Self {
+        Self {}
+    }
+}
+
+
+impl<T: PartialOrd + Clone> QuickSort<T> for QuickSortEnd {
+    fn process(&self, data: &mut Vec<T>, start: usize, end: usize) -> usize {
         let pivot = data[end].clone();
         let mut i = (start as i32) - 1;
         let mut j = end as i32;
@@ -63,9 +66,11 @@ impl QuickSort for QuickSortEnd {
 
 impl<T: PartialOrd + Clone> super::SortAlgorithm<T> for QuickSortEnd {
     fn sort(&self, data: &mut Vec<T>) {
-        self._sort(data, 0, (data.len() as usize) - 1);
+        QuickSort::sort(self, data);
     }
+}
 
+impl super::Named for QuickSortEnd {
     fn get_name(&self) -> &str {
         "Quick sort (pivot - the last element)"
     }
