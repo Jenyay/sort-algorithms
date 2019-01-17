@@ -5,6 +5,7 @@ use rand::distributions::uniform::SampleUniform;
 
 mod sort;
 use self::sort::bubble;
+use self::sort::quick;
 
 fn create_array<T: SampleUniform>(size: usize, min: T, max: T) -> Vec<T> {
     let mut result: Vec<T> = Vec::with_capacity(size);
@@ -40,14 +41,13 @@ fn run_sort<T: PartialOrd + Clone>(mut data: &mut Vec<T>,
     let duration = now.elapsed();
 
     if test_for_sorting(&data) {
+        let time_ms = duration.as_secs() * 1000 + duration.subsec_millis() as u64;
         println!("    Sorted");
+        println!("    Run {} ms", time_ms);
     }
     else {
-        println!("    Unsorted");
+        println!("    Unsorted!!!");
     }
-
-    let time_ms = duration.as_secs() * 1000 + duration.subsec_millis() as u64;
-    println!("    Run {} ms", time_ms);
 }
 
 
@@ -58,4 +58,7 @@ fn main() {
 
     let bubble_sort = bubble::BubbleSort::new();
     run_sort(&mut data.clone(), &bubble_sort);
+
+    let quick_sort_end = quick::QuickSortEnd::new();
+    run_sort(&mut data.clone(), &quick_sort_end);
 }
