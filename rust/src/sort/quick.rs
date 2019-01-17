@@ -1,9 +1,8 @@
 pub struct QuickSortEnd;
 
-impl QuickSortEnd {
-    pub fn new() -> QuickSortEnd {
-        QuickSortEnd {}
-    }
+
+trait QuickSort {
+    fn process<T: PartialOrd + Clone>(&self, data: &mut Vec<T>, start: usize, end: usize) -> usize;
 
     fn _sort<T: PartialOrd + Clone>(&self, data: &mut Vec<T>, start: usize, end: usize) {
         if start < end {
@@ -19,6 +18,17 @@ impl QuickSortEnd {
         }
     }
 
+}
+
+
+impl QuickSortEnd {
+    pub fn new() -> QuickSortEnd {
+        QuickSortEnd {}
+    }
+}
+
+
+impl QuickSort for QuickSortEnd {
     fn process<T: PartialOrd + Clone>(&self, data: &mut Vec<T>, start: usize, end: usize) -> usize {
         let pivot = data[end].clone();
         let mut i = (start as i32) - 1;
