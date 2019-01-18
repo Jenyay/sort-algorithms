@@ -63,4 +63,7 @@ fn main() {
 
     let quick_sort_end = quick::QuickSortEnd::new();
     run_sort(&mut data.clone(), &quick_sort_end);
+
+    let quick_sort_middle = quick::QuickSortMiddle::new();
+    run_sort(&mut data.clone(), &quick_sort_middle);
 }
