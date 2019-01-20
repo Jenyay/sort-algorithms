@@ -6,6 +6,7 @@ use rand::distributions::uniform::SampleUniform;
 mod sort;
 use self::sort::bubble;
 use self::sort::quick;
+use self::sort::shaker;
 
 fn create_array<T: SampleUniform>(size: usize, min: T, max: T) -> Vec<T> {
     let mut result: Vec<T> = Vec::with_capacity(size);
@@ -60,6 +61,9 @@ fn main() {
 
     let bubble_sort = bubble::BubbleSort::new();
     run_sort(&mut data.clone(), &bubble_sort);
+
+    let shaker_sort = shaker::ShakerSort::new();
+    run_sort(&mut data.clone(), &shaker_sort);
 
     let quick_sort_end = quick::QuickSortEnd::new();
     run_sort(&mut data.clone(), &quick_sort_end);
